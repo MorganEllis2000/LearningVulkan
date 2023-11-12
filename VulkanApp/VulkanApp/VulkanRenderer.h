@@ -5,6 +5,7 @@
 
 #include <stdexcept>
 #include <vector>
+#include <iostream>
 
 #include "Utilities.h"
 
@@ -49,5 +50,33 @@ private:
 	QueueFamilyIndices getQueueFamilies(VkPhysicalDevice device);
 
 
+	// Validation Layers
+	// - Functions
+	bool CheckValidationLayersSupport();
+
+	std::vector<const char*> getRequiredExtensions();
+
+	static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
+		VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
+		VkDebugUtilsMessageTypeFlagsEXT messageType,
+		const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
+		void* pUserData);
+
+	void SetupDebugMessenger();
+	void PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo);
+
+	VkResult CreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo,
+		const VkAllocationCallbacks* pAllocator, VkDebugUtilsMessengerEXT* pDebugMessenger);
+
+	void DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT debugMesseneger, const VkAllocationCallbacks* pAllocator);
+
+	// -- Variables
+	VkDebugUtilsMessengerEXT debugMessenger;
+
+	const std::vector<const char*> validationLayers = {
+		"VK_LAYER_KHRONOS_validation"
+	};
+
+	
 };
 
